@@ -1,10 +1,10 @@
 import { jsx } from '@app/html-jsx'
 import { requireAccountRole, requireRealUser } from '@app/auth'
-import { Page } from './layout'
-import Orders from './tables/orders.table'
-import { toOrderData } from './server/order-data'
-import { listCategories, listProducts } from './server/product-data'
-import AdminPage from './pages/AdminPage.vue'
+import { Page } from '../shop/layout'
+import Orders from '../shop/tables/orders.table'
+import { toOrderData } from '../shop/server/order-data'
+import { listCategories, listProducts } from '../shop/server/product-data'
+import AdminPage from './pages/DashboardPage.vue'
 
 export const adminRoute = app.get('/')
   .query(s => ({ tab: s.string().optional() }))

@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen flex flex-col">
-    <Header :categories="categories" active="admin" />
+    <AdminHeader active="form" />
 
     <main class="flex-1 max-w-4xl mx-auto w-full px-4 py-8">
       <a :href="adminRoute.url()" class="inline-flex items-center gap-1 text-sm text-stone-500 hover:text-stone-900"><Icon name="arrow-left" size="w-4 h-4" /> Ко всем товарам</a>
@@ -88,21 +88,19 @@
       </form>
     </main>
 
-    <Footer :categories="categories" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
 import { obtainStorageFilePutUrl } from '@app/storage'
-import Header from '../components/Header.vue'
-import Footer from '../components/Footer.vue'
-import Icon from '../components/Icon.vue'
-import ProductImage from '../components/ProductImage.vue'
-import { adminRoute } from '../admin'
-import { productCreateRoute } from '../backend/products/create'
-import { productUpdateRoute } from '../backend/products/update'
-import { productDeleteRoute } from '../backend/products/delete'
+import AdminHeader from '../components/AdminHeader.vue'
+import Icon from '../../shop/components/Icon.vue'
+import ProductImage from '../../shop/components/ProductImage.vue'
+import { adminRoute } from '../index'
+import { productCreateRoute } from '../api/products/create'
+import { productUpdateRoute } from '../api/products/update'
+import { productDeleteRoute } from '../api/products/delete'
 
 const props = defineProps<{ product: any | null; categories: any[]; uploadUrl: string }>()
 

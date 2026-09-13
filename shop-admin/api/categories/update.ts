@@ -1,24 +1,23 @@
 import { requireAccountRole } from '@app/auth'
-import Categories from '../../tables/categories.table'
-import { slugify, toCategoryData } from '../../server/product-data'
+import Categories from '../../../shop/tables/categories.table'
+import { toCategoryData } from '../../../shop/server/product-data'
 
-export const categoryCreateRoute = app.post('/')
+export const categoryUpdateRoute = app.post('/')
+  .query(s => ({ id: s.string() }))
   .body(s => ({
     name: s.string().min(1),
     emoji: s.string().optional(),
     description: s.string().optional(),
+    sortOrder: s.number().optional(),
   }))
   .handle(async (ctx, req) => {
     requireAccountRole(ctx, 'Staff')
-    const count = await Categories.countBy(ctx)
-    let slug = slugify(req.body.name)
-    if (await Categories.findOneBy(ctx, { slug })) slug = `${slug}-${count + 1}`
-    const row = await Categories.create(ctx, {
+    const row = await Categories.update(ctx, {
+      id: req.query.id,
       name: req.body.name.trim(),
-      slug,
       emoji: req.body.emoji?.trim() || '🛍️',
       description: req.body.description?.trim() || undefined,
-      sortOrder: count + 1,
+      ...(req.body.sortOrder !== undefined ? { sortOrder: req.body.sortOrder } : {}),
     })
     return toCategoryData(row)
   })

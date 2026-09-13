@@ -1,6 +1,6 @@
 import { requireAccountRole } from '@app/auth'
-import Orders from '../../tables/orders.table'
-import { toOrderData } from '../../server/order-data'
+import Orders from '../../../shop/tables/orders.table'
+import { toOrderData } from '../../../shop/server/order-data'
 
 export const orderUpdateStatusRoute = app.post('/')
   .query(s => ({ id: s.string() }))

@@ -1,9 +1,9 @@
 import { jsx } from '@app/html-jsx'
 import { requireAccountRole, requireRealUser } from '@app/auth'
 import { getUploadGetPutUrl } from '@app/storage'
-import { Page } from './layout'
-import { getAdminProduct, listCategories } from './server/product-data'
-import AdminProductPage from './pages/AdminProductPage.vue'
+import { Page } from '../shop/layout'
+import { getAdminProduct, listCategories } from '../shop/server/product-data'
+import AdminProductPage from './pages/ProductFormPage.vue'
 
 /** Форма товара: без id — создание, с id — редактирование. */
 export const adminProductRoute = app.get('/')

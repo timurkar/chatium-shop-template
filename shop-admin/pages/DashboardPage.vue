@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen flex flex-col">
-    <Header :categories="categories" active="admin" />
+    <AdminHeader :active="tab" />
 
     <main class="flex-1 max-w-7xl mx-auto w-full px-4 py-8">
       <div class="flex flex-wrap items-end justify-between gap-4">
@@ -148,28 +148,26 @@
       </section>
     </main>
 
-    <Footer :categories="categories" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
-import Header from '../components/Header.vue'
-import Footer from '../components/Footer.vue'
-import Icon from '../components/Icon.vue'
-import ProductImage from '../components/ProductImage.vue'
-import EmptyState from '../components/EmptyState.vue'
-import { DELIVERY_METHODS, ORDER_STATUSES, PRODUCT_STATUSES } from '../shared/config'
-import { adminProductRoute } from '../admin-product'
-import { productRoute } from '../product'
-import { orderRoute } from '../order'
-import { seedRoute } from '../seed'
-import { productUpdateRoute } from '../backend/products/update'
-import { productDeleteRoute } from '../backend/products/delete'
-import { orderUpdateStatusRoute } from '../backend/orders/update-status'
-import { categoryCreateRoute } from '../backend/categories/create'
-import { categoryUpdateRoute } from '../backend/categories/update'
-import { categoryDeleteRoute } from '../backend/categories/delete'
+import AdminHeader from '../components/AdminHeader.vue'
+import Icon from '../../shop/components/Icon.vue'
+import ProductImage from '../../shop/components/ProductImage.vue'
+import EmptyState from '../../shop/components/EmptyState.vue'
+import { DELIVERY_METHODS, ORDER_STATUSES, PRODUCT_STATUSES } from '../../shop/shared/config'
+import { adminProductRoute } from '../product'
+import { productRoute } from '../../shop/product'
+import { orderRoute } from '../../shop/order'
+import { seedRoute } from '../../shop/seed'
+import { productUpdateRoute } from '../api/products/update'
+import { productDeleteRoute } from '../api/products/delete'
+import { orderUpdateStatusRoute } from '../api/orders/update-status'
+import { categoryCreateRoute } from '../api/categories/create'
+import { categoryUpdateRoute } from '../api/categories/update'
+import { categoryDeleteRoute } from '../api/categories/delete'
 
 const props = defineProps<{
   categories: any[]

@@ -1,6 +1,6 @@
 import { requireAccountRole } from '@app/auth'
-import Categories from '../../tables/categories.table'
-import Products from '../../tables/products.table'
+import Categories from '../../../shop/tables/categories.table'
+import Products from '../../../shop/tables/products.table'
 
 export const categoryDeleteRoute = app.post('/')
   .query(s => ({ id: s.string() }))

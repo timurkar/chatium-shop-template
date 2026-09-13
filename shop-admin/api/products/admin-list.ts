@@ -1,5 +1,5 @@
 import { requireAccountRole } from '@app/auth'
-import { listProducts } from '../../server/product-data'
+import { listProducts } from '../../../shop/server/product-data'
 
 /** Список для админки: включая скрытые товары. */
 export const productsAdminListRoute = app.get('/', async ctx => {

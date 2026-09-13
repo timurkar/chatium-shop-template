@@ -54,7 +54,6 @@
           <button type="button" class="h-11 px-5 rounded-full bg-stone-900 text-white font-medium hover:bg-stone-700 disabled:opacity-50" :disabled="seeding" @click="seed">
             {{ seeding ? 'Наполняем…' : 'Наполнить демо-данными' }}
           </button>
-          <a v-if="isStaff" :href="adminProductRoute.url()" class="h-11 px-5 rounded-full border border-stone-300 font-medium inline-flex items-center hover:bg-white">Добавить товар</a>
         </EmptyState>
         <p v-if="seedError" class="mt-3 text-sm text-rose-600">{{ seedError }}</p>
       </section>
@@ -100,14 +99,12 @@ import EmptyState from '../components/EmptyState.vue'
 import { SHOP } from '../shared/config'
 import { formatPrice } from '../shared/cart'
 import { catalogRoute } from '../catalog'
-import { adminProductRoute } from '../admin-product'
 import { seedRoute } from '../seed'
 
 const props = defineProps<{
   categories: any[]
   featured: any[]
   newest: any[]
-  isStaff: boolean
 }>()
 
 const freeFrom = formatPrice(SHOP.freeDeliveryFrom)

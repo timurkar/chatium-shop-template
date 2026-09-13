@@ -44,14 +44,6 @@
 
       <div class="flex items-center gap-1 ml-auto sm:ml-0">
         <a
-          v-if="isStaff"
-          :href="adminRoute.url()"
-          class="hidden sm:inline-flex items-center gap-1.5 px-3 h-10 rounded-full text-sm hover:bg-stone-100"
-          title="Панель управления"
-        >
-          <Icon name="settings" size="w-4 h-4" /> Админка
-        </a>
-        <a
           :href="cartRoute.url()"
           class="relative inline-flex items-center gap-2 h-10 px-3 rounded-full bg-stone-900 text-white text-sm font-medium hover:bg-stone-700"
         >
@@ -82,7 +74,6 @@
           :href="catalogRoute.query({ category: c.slug }).url()"
           class="px-3 py-2 rounded-lg hover:bg-stone-100"
         >{{ c.emoji }} {{ c.name }}</a>
-        <a v-if="isStaff" :href="adminRoute.url()" class="px-3 py-2 rounded-lg hover:bg-stone-100">⚙️ Админка</a>
       </nav>
     </div>
   </header>
@@ -96,14 +87,13 @@ import { CART_EVENT, cartCount } from '../shared/cart'
 import { indexRoute } from '../index'
 import { catalogRoute } from '../catalog'
 import { cartRoute } from '../cart'
-import { adminRoute } from '../admin'
 
 type Category = { id: string; name: string; slug: string; emoji: string }
 
 const props = withDefaults(
   defineProps<{
     categories?: Category[]
-    active?: 'home' | 'catalog' | 'cart' | 'admin'
+    active?: 'home' | 'catalog' | 'cart'
     activeCategory?: string
     initialQuery?: string
   }>(),
@@ -113,7 +103,6 @@ const props = withDefaults(
 const menuOpen = ref(false)
 const query = ref(props.initialQuery)
 const count = ref(0)
-const isStaff = ref(false)
 
 function refreshCount() {
   count.value = cartCount()
@@ -126,7 +115,6 @@ function search() {
 
 onMounted(() => {
   refreshCount()
-  isStaff.value = !!ctx.user?.is?.('Staff')
   window.addEventListener(CART_EVENT, refreshCount)
   window.addEventListener('storage', refreshCount)
 })

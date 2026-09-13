@@ -1,9 +1,9 @@
 import { requireAccountRole } from '@app/auth'
 import { Money } from '@app/heap'
-import Products from '../../tables/products.table'
-import { getAdminProduct } from '../../server/product-data'
+import Products from '../../../shop/tables/products.table'
+import { getAdminProduct } from '../../../shop/server/product-data'
 import { productBody } from '../../server/product-schema'
-import { SHOP } from '../../shared/config'
+import { SHOP } from '../../../shop/shared/config'
 
 export const productUpdateRoute = app.post('/')
   .query(s => ({ id: s.string() }))
