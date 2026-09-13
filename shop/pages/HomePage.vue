@@ -39,9 +39,9 @@
             v-for="c in categories"
             :key="c.id"
             :href="catalogRoute.query({ category: c.slug }).url()"
-            class="group relative overflow-hidden rounded-2xl bg-stone-200 aspect-[4/5] hover:shadow-lg hover:-translate-y-0.5 transition"
+            class="group block relative overflow-hidden rounded-2xl bg-stone-200 aspect-[4/5] hover:shadow-lg hover:-translate-y-0.5 transition"
           >
-            <ProductImage :image-hash="c.imageHash" :title="c.name" :width="600" wrapper-class="absolute inset-0" />
+            <ProductImage :image-hash="c.imageHash" :title="c.name" :width="600" wrapper-class="w-full h-full [&_img]:transition-transform [&_img]:duration-500 group-hover:[&_img]:scale-105" />
             <div class="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent"></div>
             <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
               <div class="font-semibold text-lg">{{ c.name }}</div>
