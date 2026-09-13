@@ -1,4 +1,3 @@
-import { requireAccountRole } from '@app/auth'
 import { Money } from '@app/heap'
 import Categories from './tables/categories.table'
 import Products from './tables/products.table'
@@ -6,11 +5,10 @@ import { DEMO_CATEGORIES, DEMO_PRODUCTS } from './server/seed-data'
 import { SHOP } from './shared/config'
 
 /**
- * GET /seed — наполняет магазин демо-данными. Идемпотентно: если товары уже есть, ничего не делает.
- * Доступно только сотрудникам аккаунта.
+ * GET /seed — наполняет магазин демо-данными. Идемпотентно: если товары уже есть, ничего не делает,
+ * поэтому роут открыт без авторизации — удобно для первого запуска шаблона.
  */
 export const seedRoute = app.get('/', async ctx => {
-  requireAccountRole(ctx, 'Staff')
   const existing = await Products.countBy(ctx)
   if (existing > 0) return { seeded: false, reason: `В каталоге уже ${existing} товаров` }
 

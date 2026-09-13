@@ -50,13 +50,11 @@
 
       <!-- Empty catalog -->
       <section v-if="!featured.length && !newest.length" class="max-w-7xl mx-auto px-4 mt-14">
-        <EmptyState emoji="📦" title="Каталог пока пуст" :text="isStaff ? 'Наполните магазин демо-товарами одним кликом или добавьте свои через панель управления.' : 'Скоро здесь появятся товары.'">
-          <template v-if="isStaff">
-            <button type="button" class="h-11 px-5 rounded-full bg-stone-900 text-white font-medium hover:bg-stone-700 disabled:opacity-50" :disabled="seeding" @click="seed">
-              {{ seeding ? 'Наполняем…' : 'Наполнить демо-данными' }}
-            </button>
-            <a :href="adminProductRoute.url()" class="h-11 px-5 rounded-full border border-stone-300 font-medium inline-flex items-center hover:bg-white">Добавить товар</a>
-          </template>
+        <EmptyState emoji="📦" title="Каталог пока пуст"  text="Наполните магазин демо-товарами одним кликом или добавьте свои через панель управления.">
+          <button type="button" class="h-11 px-5 rounded-full bg-stone-900 text-white font-medium hover:bg-stone-700 disabled:opacity-50" :disabled="seeding" @click="seed">
+            {{ seeding ? 'Наполняем…' : 'Наполнить демо-данными' }}
+          </button>
+          <a v-if="isStaff" :href="adminProductRoute.url()" class="h-11 px-5 rounded-full border border-stone-300 font-medium inline-flex items-center hover:bg-white">Добавить товар</a>
         </EmptyState>
         <p v-if="seedError" class="mt-3 text-sm text-rose-600">{{ seedError }}</p>
       </section>
