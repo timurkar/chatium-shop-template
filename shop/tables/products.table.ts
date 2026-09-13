@@ -7,7 +7,6 @@ const Products = Heap.Table('t_shop_products_N4RD', {
   price: Heap.Money({ customMeta: { title: 'Цена' } }),
   oldPrice: Heap.Optional(Heap.Money({ customMeta: { title: 'Старая цена (для скидки)' } })),
   category: Heap.Optional(Heap.RefLink(Categories, { customMeta: { title: 'Категория' } })),
-  emoji: Heap.String({ customMeta: { title: 'Эмодзи-обложка (если нет фото)' } }),
   imageHash: Heap.Optional(Heap.String({ customMeta: { title: 'Хеш фото в хранилище' } })),
   status: Heap.Enum(
     { active: 'active', draft: 'draft' } as const,

@@ -6,8 +6,8 @@
       <!-- Hero -->
       <section class="max-w-7xl mx-auto px-4 pt-8 md:pt-12">
         <div class="relative overflow-hidden rounded-3xl bg-stone-900 text-white px-6 py-14 md:px-14 md:py-20">
-          <div class="absolute -right-24 -top-24 w-96 h-96 rounded-full bg-amber-400/20 blur-3xl"></div>
-          <div class="absolute -left-16 -bottom-24 w-80 h-80 rounded-full bg-sky-400/10 blur-3xl"></div>
+          <img v-if="heroImage" :src="heroImage" alt="" class="absolute inset-0 w-full h-full object-cover opacity-50" />
+          <div class="absolute inset-0 bg-gradient-to-r from-stone-950/90 via-stone-950/60 to-stone-900/20"></div>
           <div class="relative max-w-2xl">
             <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium">
               <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Бесплатная доставка от {{ freeFrom }}
@@ -19,7 +19,7 @@
                 Смотреть каталог <Icon name="arrow-right" size="w-4 h-4" />
               </a>
               <a v-if="categories[0]" :href="catalogRoute.query({ category: categories[0].slug }).url()" class="inline-flex items-center h-12 px-6 rounded-full border border-white/30 hover:bg-white/10 font-medium">
-                {{ categories[0].emoji }} {{ categories[0].name }}
+                {{ categories[0].name }}
               </a>
             </div>
           </div>
@@ -39,18 +39,21 @@
             v-for="c in categories"
             :key="c.id"
             :href="catalogRoute.query({ category: c.slug }).url()"
-            class="group rounded-2xl bg-white border border-stone-200/80 p-5 hover:shadow-lg hover:-translate-y-0.5 transition"
+            class="group relative overflow-hidden rounded-2xl bg-stone-200 aspect-[4/5] hover:shadow-lg hover:-translate-y-0.5 transition"
           >
-            <div class="text-4xl group-hover:scale-110 transition-transform origin-left">{{ c.emoji }}</div>
-            <div class="mt-4 font-semibold">{{ c.name }}</div>
-            <div v-if="c.description" class="mt-1 text-xs text-stone-500 line-clamp-2">{{ c.description }}</div>
+            <ProductImage :image-hash="c.imageHash" :title="c.name" :width="600" wrapper-class="absolute inset-0" />
+            <div class="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-stone-950/20 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
+              <div class="font-semibold text-lg">{{ c.name }}</div>
+              <div v-if="c.description" class="mt-0.5 text-xs text-stone-300 line-clamp-2">{{ c.description }}</div>
+            </div>
           </a>
         </div>
       </section>
 
       <!-- Empty catalog -->
       <section v-if="!featured.length && !newest.length" class="max-w-7xl mx-auto px-4 mt-14">
-        <EmptyState emoji="📦" title="Каталог пока пуст"  text="Наполните магазин демо-товарами одним кликом или добавьте свои через панель управления.">
+        <EmptyState icon="box" title="Каталог пока пуст"  text="Наполните магазин демо-товарами одним кликом или добавьте свои через панель управления.">
           <button type="button" class="h-11 px-5 rounded-full bg-stone-900 text-white font-medium hover:bg-stone-700 disabled:opacity-50" :disabled="seeding" @click="seed">
             {{ seeding ? 'Наполняем…' : 'Наполнить демо-данными' }}
           </button>
@@ -96,6 +99,8 @@ import Icon from '../components/Icon.vue'
 import SectionTitle from '../components/SectionTitle.vue'
 import ProductGrid from '../components/ProductGrid.vue'
 import EmptyState from '../components/EmptyState.vue'
+import ProductImage from '../components/ProductImage.vue'
+import { getThumbnailUrl } from '@app/storage'
 import { SHOP } from '../shared/config'
 import { formatPrice } from '../shared/cart'
 import { catalogRoute } from '../catalog'
@@ -108,6 +113,7 @@ const props = defineProps<{
 }>()
 
 const freeFrom = formatPrice(SHOP.freeDeliveryFrom)
+const heroImage = SHOP.heroImageHash ? getThumbnailUrl(ctx, SHOP.heroImageHash, 1800) : ''
 const productCount = computed(() => {
   const ids = new Set([...props.featured, ...props.newest].map(p => p.id))
   return Math.max(ids.size, 10)

@@ -13,7 +13,7 @@
       <div class="mt-4 flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 class="text-3xl md:text-4xl font-black tracking-tight">
-            {{ currentCategory ? currentCategory.emoji + ' ' + currentCategory.name : query ? `Поиск: «${query}»` : 'Все товары' }}
+            {{ currentCategory ? currentCategory.name : query ? `Поиск: «${query}»` : 'Все товары' }}
           </h1>
           <p class="mt-1 text-stone-500">{{ products.length }} {{ pluralize(products.length, 'товар', 'товара', 'товаров') }}</p>
         </div>
@@ -38,7 +38,7 @@
           :href="catalogRoute.query({ category: c.slug }).url()"
           class="shrink-0 h-10 px-4 rounded-full border text-sm font-medium inline-flex items-center gap-1.5"
           :class="filter.category === c.slug ? 'bg-stone-900 text-white border-stone-900' : 'bg-white border-stone-300 hover:border-stone-500'"
-        >{{ c.emoji }} {{ c.name }}</a>
+        >{{ c.name }}</a>
       </div>
 
       <!-- Search -->
@@ -58,7 +58,7 @@
             <div class="p-4 space-y-2"><div class="h-3 bg-stone-100 rounded w-1/3"></div><div class="h-4 bg-stone-100 rounded w-3/4"></div><div class="h-6 bg-stone-100 rounded w-1/2 mt-4"></div></div>
           </div>
         </div>
-        <EmptyState v-else-if="!products.length" emoji="🔍" title="Ничего не нашли" text="Попробуйте изменить запрос или выбрать другую категорию.">
+        <EmptyState v-else-if="!products.length" icon="search" title="Ничего не нашли" text="Попробуйте изменить запрос или выбрать другую категорию.">
           <a :href="catalogRoute.url()" class="h-11 px-5 rounded-full bg-stone-900 text-white font-medium inline-flex items-center">Показать все товары</a>
         </EmptyState>
         <ProductGrid v-else :products="products" />

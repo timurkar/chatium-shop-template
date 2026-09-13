@@ -3,7 +3,6 @@ import { Heap } from '@app/heap'
 const OrderItem = Heap.Object({
   productId: Heap.String({ customMeta: { title: 'ID товара' } }),
   title: Heap.String({ customMeta: { title: 'Название' } }),
-  emoji: Heap.String({ customMeta: { title: 'Эмодзи' } }),
   imageHash: Heap.Optional(Heap.String({ customMeta: { title: 'Хеш фото' } })),
   price: Heap.Money({ customMeta: { title: 'Цена за единицу' } }),
   qty: Heap.Number({ customMeta: { title: 'Количество' } }),

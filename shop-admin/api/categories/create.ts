@@ -5,7 +5,7 @@ import { slugify, toCategoryData } from '../../../shop/server/product-data'
 export const categoryCreateRoute = app.post('/')
   .body(s => ({
     name: s.string().min(1),
-    emoji: s.string().optional(),
+    imageHash: s.string().optional(),
     description: s.string().optional(),
   }))
   .handle(async (ctx, req) => {
@@ -16,7 +16,7 @@ export const categoryCreateRoute = app.post('/')
     const row = await Categories.create(ctx, {
       name: req.body.name.trim(),
       slug,
-      emoji: req.body.emoji?.trim() || '🛍️',
+      imageHash: req.body.imageHash?.trim() || undefined,
       description: req.body.description?.trim() || undefined,
       sortOrder: count + 1,
     })

@@ -37,7 +37,7 @@ export const seedRoute = app.get('/')
       price: new Money(p.price, SHOP.currency),
       oldPrice: p.oldPrice ? new Money(p.oldPrice, SHOP.currency) : undefined,
       category: categoryIds.get(p.category),
-      emoji: p.emoji,
+      imageHash: p.imageHash,
       status: 'active',
       stock: p.stock,
       featured: p.featured ?? false,

@@ -9,7 +9,7 @@
       <form class="mt-8 grid md:grid-cols-[280px_1fr] gap-8 items-start" @submit.prevent="save">
         <!-- Image -->
         <div class="space-y-3">
-          <ProductImage :image-hash="form.imageHash || null" :emoji="form.emoji || '🛍️'" :title="form.title || 'Товар'" :seed="product?.id ?? form.title" wrapper-class="aspect-square rounded-2xl" emoji-class="text-8xl" />
+          <ProductImage :image-hash="form.imageHash || null" :title="form.title || 'Товар'" wrapper-class="aspect-square rounded-2xl" icon-size="w-14 h-14" />
           <label class="block">
             <span class="sr-only">Фото товара</span>
             <input type="file" accept="image/*" class="hidden" @change="onFile" ref="fileInput" />
@@ -20,10 +20,6 @@
           </label>
           <button v-if="form.imageHash" type="button" class="w-full text-sm text-stone-500 hover:text-rose-600" @click="form.imageHash = ''">Убрать фото</button>
           <p v-if="uploadError" class="text-sm text-rose-600">{{ uploadError }}</p>
-          <label class="block">
-            <span class="text-sm text-stone-600">Эмодзи-обложка (если нет фото)</span>
-            <input v-model="form.emoji" class="mt-1 w-full h-11 px-3 rounded-xl border border-stone-300 outline-none focus:border-stone-500 text-center text-xl" placeholder="🛍️" />
-          </label>
         </div>
 
         <!-- Fields -->
@@ -55,7 +51,7 @@
               <span class="text-sm text-stone-600">Категория</span>
               <select v-model="form.categoryId" class="mt-1 w-full h-11 px-3 rounded-xl border border-stone-300 bg-white outline-none focus:border-stone-500">
                 <option value="">Без категории</option>
-                <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.emoji }} {{ c.name }}</option>
+                <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
               </select>
             </label>
             <label class="block">
@@ -111,7 +107,6 @@ const form = reactive({
   oldPrice: props.product?.oldPrice ?? null,
   stock: props.product?.stock ?? 10,
   categoryId: props.product?.categoryId ?? '',
-  emoji: props.product?.emoji ?? '',
   imageHash: props.product?.imageHash ?? '',
   badge: props.product?.badge ?? '',
   featured: props.product?.featured ?? false,
@@ -159,7 +154,6 @@ function payload() {
     price: Number(form.price) || 0,
     oldPrice: form.oldPrice ? Number(form.oldPrice) : undefined,
     categoryId: form.categoryId || undefined,
-    emoji: form.emoji || undefined,
     imageHash: form.imageHash || undefined,
     status: form.status,
     stock: Math.max(0, Math.floor(Number(form.stock) || 0)),

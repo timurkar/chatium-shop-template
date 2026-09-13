@@ -7,7 +7,7 @@
 
       <div v-if="loading" class="mt-8 text-stone-500">Загружаем корзину…</div>
 
-      <EmptyState v-else-if="!lines.length" class="mt-8" emoji="🛒" title="В корзине пока пусто" text="Загляните в каталог — там точно найдётся что-то для дома.">
+      <EmptyState v-else-if="!lines.length" class="mt-8" icon="cart" title="В корзине пока пусто" text="Загляните в каталог — там точно найдётся что-то для дома.">
         <a :href="catalogRoute.url()" class="h-11 px-5 rounded-full bg-stone-900 text-white font-medium inline-flex items-center">Перейти в каталог</a>
       </EmptyState>
 
@@ -16,7 +16,7 @@
         <section class="bg-white rounded-2xl border border-stone-200/80 divide-y divide-stone-100">
           <div v-for="line in lines" :key="line.product.id" class="p-4 sm:p-5 flex gap-4">
             <a :href="productRoute.query({ id: line.product.id }).url()" class="shrink-0">
-              <ProductImage :image-hash="line.product.imageHash" :emoji="line.product.emoji" :title="line.product.title" :seed="line.product.id" :width="200" wrapper-class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl" emoji-class="text-4xl" />
+              <ProductImage :image-hash="line.product.imageHash" :title="line.product.title" :width="200" wrapper-class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl" icon-size="w-6 h-6" />
             </a>
             <div class="flex-1 min-w-0">
               <div class="flex justify-between gap-3">

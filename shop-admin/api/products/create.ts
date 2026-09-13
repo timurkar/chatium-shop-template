@@ -17,7 +17,6 @@ export const productCreateRoute = app.post('/')
       price: new Money(b.price, SHOP.currency),
       oldPrice: b.oldPrice && b.oldPrice > b.price ? new Money(b.oldPrice, SHOP.currency) : undefined,
       category: b.categoryId || undefined,
-      emoji: b.emoji?.trim() || '🛍️',
       imageHash: b.imageHash?.trim() || undefined,
       status: b.status,
       stock: b.stock,

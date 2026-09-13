@@ -6,7 +6,7 @@ export const categoryUpdateRoute = app.post('/')
   .query(s => ({ id: s.string() }))
   .body(s => ({
     name: s.string().min(1),
-    emoji: s.string().optional(),
+    imageHash: s.string().optional(),
     description: s.string().optional(),
     sortOrder: s.number().optional(),
   }))
@@ -15,7 +15,7 @@ export const categoryUpdateRoute = app.post('/')
     const row = await Categories.update(ctx, {
       id: req.query.id,
       name: req.body.name.trim(),
-      emoji: req.body.emoji?.trim() || '🛍️',
+      imageHash: req.body.imageHash?.trim() || null,
       description: req.body.description?.trim() || undefined,
       ...(req.body.sortOrder !== undefined ? { sortOrder: req.body.sortOrder } : {}),
     })

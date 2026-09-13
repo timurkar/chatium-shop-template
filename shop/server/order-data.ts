@@ -8,7 +8,6 @@ const moneyFormat = { minimumFractionDigits: 0, maximumFractionDigits: 0 }
 export type OrderItemData = {
   productId: string
   title: string
-  emoji: string
   imageHash: string | null
   price: number
   priceFormatted: string
@@ -53,7 +52,6 @@ export function toOrderData(ctx: app.Ctx, row: typeof Orders.T): OrderData {
       return {
         productId: item.productId,
         title: item.title,
-        emoji: item.emoji,
         imageHash: item.imageHash ?? null,
         price: item.price.amount,
         priceFormatted: item.price.format(ctx, moneyFormat),
@@ -113,7 +111,6 @@ export async function createOrder(ctx: app.Ctx, input: CreateOrderInput) {
     items.push({
       productId: product.id,
       title: product.title,
-      emoji: product.emoji,
       imageHash: product.imageHash,
       price: product.price,
       qty,

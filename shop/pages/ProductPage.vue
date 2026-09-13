@@ -19,12 +19,10 @@
         <div class="relative">
           <ProductImage
             :image-hash="product.imageHash"
-            :emoji="product.emoji"
             :title="product.title"
-            :seed="product.id"
             :width="1000"
             wrapper-class="aspect-square rounded-3xl"
-            emoji-class="text-[10rem] md:text-[14rem]"
+            icon-size="w-16 h-16"
           />
           <div class="absolute top-4 left-4 flex gap-2">
             <span v-if="product.discountPercent" class="px-3 py-1 rounded-full bg-rose-500 text-white text-sm font-bold">−{{ product.discountPercent }}%</span>

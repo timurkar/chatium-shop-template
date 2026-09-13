@@ -73,7 +73,7 @@
           :key="c.id"
           :href="catalogRoute.query({ category: c.slug }).url()"
           class="px-3 py-2 rounded-lg hover:bg-stone-100"
-        >{{ c.emoji }} {{ c.name }}</a>
+        >{{ c.name }}</a>
       </nav>
     </div>
   </header>
@@ -88,7 +88,7 @@ import { indexRoute } from '../index'
 import { catalogRoute } from '../catalog'
 import { cartRoute } from '../cart'
 
-type Category = { id: string; name: string; slug: string; emoji: string }
+type Category = { id: string; name: string; slug: string }
 
 const props = withDefaults(
   defineProps<{

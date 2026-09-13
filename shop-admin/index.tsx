@@ -1,5 +1,6 @@
 import { jsx } from '@app/html-jsx'
 import { requireAccountRole, requireRealUser } from '@app/auth'
+import { getUploadGetPutUrl } from '@app/storage'
 import { Page } from '../shop/layout'
 import Orders from '../shop/tables/orders.table'
 import { toOrderData } from '../shop/server/order-data'
@@ -24,6 +25,7 @@ export const adminRoute = app.get('/')
           products={products}
           orders={orderRows.map(row => toOrderData(ctx, row))}
           initialTab={tab}
+          uploadUrl={getUploadGetPutUrl(ctx)}
         />
       </Page>
     )

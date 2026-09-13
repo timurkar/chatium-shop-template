@@ -6,7 +6,7 @@ export type CategoryData = {
   id: string
   name: string
   slug: string
-  emoji: string
+  imageHash: string | null
   description: string
   sortOrder: number
 }
@@ -23,7 +23,6 @@ export type ProductData = {
   categoryId: string | null
   categoryName: string | null
   categorySlug: string | null
-  emoji: string
   imageHash: string | null
   status: 'active' | 'draft'
   stock: number
@@ -40,7 +39,7 @@ export function toCategoryData(row: typeof Categories.T): CategoryData {
     id: row.id,
     name: row.name,
     slug: row.slug,
-    emoji: row.emoji,
+    imageHash: row.imageHash ?? null,
     description: row.description ?? '',
     sortOrder: row.sortOrder,
   }
@@ -81,7 +80,6 @@ export function toProductData(
     categoryId: category ? category.id : null,
     categoryName: category ? category.name : null,
     categorySlug: category ? category.slug : null,
-    emoji: row.emoji,
     imageHash: row.imageHash ?? null,
     status: row.status,
     stock: row.stock,

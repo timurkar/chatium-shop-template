@@ -16,6 +16,8 @@ export const SHOP = {
   workingHours: 'Ежедневно 10:00–21:00',
   freeDeliveryFrom: 5000,
   deliveryPrice: 390,
+  /** Фото для обложки главной (хеш в хранилище Chatium). Пустая строка — тёмный фон без фото. */
+  heroImageHash: 'image_msk_ltBgifmZxC.1600x1067.jpeg',
 }
 
 export const ORDER_STATUSES = {

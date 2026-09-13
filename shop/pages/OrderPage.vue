@@ -13,7 +13,7 @@
       <section class="mt-10 bg-white rounded-2xl border border-stone-200/80 divide-y divide-stone-100">
         <div v-for="item in order.items" :key="item.productId" class="p-4 flex items-center gap-4">
           <a :href="productRoute.query({ id: item.productId }).url()">
-            <ProductImage :image-hash="item.imageHash" :emoji="item.emoji" :title="item.title" :seed="item.productId" :width="160" wrapper-class="w-16 h-16 rounded-xl" emoji-class="text-3xl" />
+            <ProductImage :image-hash="item.imageHash" :title="item.title" :width="160" wrapper-class="w-16 h-16 rounded-xl" icon-size="w-5 h-5" />
           </a>
           <div class="flex-1 min-w-0">
             <div class="font-semibold line-clamp-1">{{ item.title }}</div>

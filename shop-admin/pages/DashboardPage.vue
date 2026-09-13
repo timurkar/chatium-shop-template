@@ -27,10 +27,10 @@
           <input v-model="productQuery" type="search" placeholder="Поиск по названию" class="h-10 px-4 rounded-full bg-white border border-stone-300 outline-none focus:border-stone-500 text-sm w-64" />
           <select v-model="productCategory" class="h-10 px-3 rounded-full bg-white border border-stone-300 text-sm outline-none">
             <option value="">Все категории</option>
-            <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.emoji }} {{ c.name }}</option>
+            <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
           </select>
         </div>
-        <EmptyState v-if="!products.length" emoji="📦" title="Товаров пока нет" text="Добавьте первый товар или наполните каталог демо-данными.">
+        <EmptyState v-if="!products.length" icon="box" title="Товаров пока нет" text="Добавьте первый товар или наполните каталог демо-данными.">
           <a :href="adminProductRoute.url()" class="h-11 px-5 rounded-full bg-stone-900 text-white font-medium inline-flex items-center">Добавить товар</a>
           <button type="button" class="h-11 px-5 rounded-full border border-stone-300 font-medium hover:bg-white" :disabled="busy" @click="seed">Демо-данные</button>
         </EmptyState>
@@ -43,7 +43,7 @@
               <tr v-for="p in filteredProducts" :key="p.id" class="hover:bg-stone-50/70">
                 <td class="p-4">
                   <div class="flex items-center gap-3">
-                    <ProductImage :image-hash="p.imageHash" :emoji="p.emoji" :title="p.title" :seed="p.id" :width="100" wrapper-class="w-11 h-11 rounded-lg shrink-0" emoji-class="text-xl" />
+                    <ProductImage :image-hash="p.imageHash" :title="p.title" :width="100" wrapper-class="w-11 h-11 rounded-lg shrink-0" icon-size="w-4 h-4" />
                     <div class="min-w-0">
                       <a :href="adminProductRoute.query({ id: p.id }).url()" class="font-medium hover:underline line-clamp-1">{{ p.title }}</a>
                       <div class="text-xs text-stone-400 flex gap-2"><span v-if="p.featured">★ хит</span><span v-if="p.badge">{{ p.badge }}</span></div>
@@ -78,7 +78,7 @@
           <button type="button" class="h-9 px-3 rounded-full text-sm border" :class="orderStatus === '' ? 'bg-stone-900 text-white border-stone-900' : 'bg-white border-stone-300'" @click="orderStatus = ''">Все</button>
           <button v-for="(label, key) in ORDER_STATUSES" :key="key" type="button" class="h-9 px-3 rounded-full text-sm border" :class="orderStatus === key ? 'bg-stone-900 text-white border-stone-900' : 'bg-white border-stone-300'" @click="orderStatus = key">{{ label }}</button>
         </div>
-        <EmptyState v-if="!filteredOrders.length" emoji="🧾" title="Заказов нет" text="Здесь появятся заказы покупателей." />
+        <EmptyState v-if="!filteredOrders.length" icon="box" title="Заказов нет" text="Здесь появятся заказы покупателей." />
         <div v-else class="space-y-3">
           <details v-for="o in filteredOrders" :key="o.id" class="bg-white rounded-2xl border border-stone-200/80 group">
             <summary class="p-4 flex flex-wrap items-center gap-3 cursor-pointer list-none">
@@ -93,7 +93,7 @@
             <div class="px-4 pb-4 grid md:grid-cols-[1fr_280px] gap-4">
               <ul class="divide-y divide-stone-100 text-sm">
                 <li v-for="item in o.items" :key="item.productId" class="py-2 flex items-center gap-3">
-                  <span class="text-xl">{{ item.emoji }}</span>
+                  <ProductImage :image-hash="item.imageHash" :title="item.title" :width="80" wrapper-class="w-9 h-9 rounded-lg shrink-0" icon-size="w-4 h-4" />
                   <span class="flex-1">{{ item.title }}</span>
                   <span class="text-stone-500">{{ item.qty }} × {{ item.priceFormatted }}</span>
                   <span class="font-medium w-24 text-right">{{ item.sumFormatted }}</span>
@@ -118,14 +118,15 @@
           <div v-if="!categories.length" class="p-8 text-center text-stone-500">Категорий пока нет</div>
           <div v-for="c in categories" :key="c.id" class="p-4 flex items-center gap-3">
             <template v-if="editingCategory?.id === c.id">
-              <input v-model="editingCategory.emoji" class="w-14 h-10 text-center rounded-lg border border-stone-300" />
+              <ProductImage :image-hash="editingCategory.imageHash || null" :title="editingCategory.name" :width="120" wrapper-class="w-14 h-14 rounded-lg shrink-0" icon-size="w-5 h-5" />
+              <button type="button" class="h-10 px-3 rounded-full border border-stone-300 text-sm" :disabled="uploading" @click="pickCategoryImage(editingCategory)">{{ uploading ? '…' : 'Фото' }}</button>
               <input v-model="editingCategory.name" class="flex-1 h-10 px-3 rounded-lg border border-stone-300" />
               <input v-model="editingCategory.description" placeholder="Описание" class="flex-1 h-10 px-3 rounded-lg border border-stone-300 hidden md:block" />
               <button type="button" class="h-10 px-4 rounded-full bg-stone-900 text-white text-sm" :disabled="busy" @click="saveCategory">Сохранить</button>
               <button type="button" class="h-10 px-3 rounded-full text-sm text-stone-500" @click="editingCategory = null">Отмена</button>
             </template>
             <template v-else>
-              <span class="text-2xl w-10 text-center">{{ c.emoji }}</span>
+              <ProductImage :image-hash="c.imageHash" :title="c.name" :width="120" wrapper-class="w-14 h-14 rounded-lg shrink-0" icon-size="w-5 h-5" />
               <div class="flex-1 min-w-0">
                 <div class="font-medium">{{ c.name }} <span class="text-xs text-stone-400 font-normal">/{{ c.slug }}</span></div>
                 <div class="text-sm text-stone-500 line-clamp-1">{{ c.description || '—' }}</div>
@@ -138,9 +139,10 @@
         </div>
         <form class="bg-white rounded-2xl border border-stone-200/80 p-5 space-y-3" @submit.prevent="createCategory">
           <h2 class="font-bold">Новая категория</h2>
-          <div class="flex gap-2">
-            <input v-model="newCategory.emoji" placeholder="🛍️" class="w-16 h-11 text-center rounded-xl border border-stone-300 outline-none focus:border-stone-500" />
-            <input v-model="newCategory.name" required placeholder="Название" class="flex-1 h-11 px-3 rounded-xl border border-stone-300 outline-none focus:border-stone-500" />
+          <input v-model="newCategory.name" required placeholder="Название" class="w-full h-11 px-3 rounded-xl border border-stone-300 outline-none focus:border-stone-500" />
+          <div class="flex items-center gap-3">
+            <ProductImage :image-hash="newCategory.imageHash || null" title="Обложка" :width="120" wrapper-class="w-14 h-14 rounded-lg shrink-0" icon-size="w-5 h-5" />
+            <button type="button" class="h-10 px-4 rounded-full border border-stone-300 text-sm font-medium hover:bg-stone-50 disabled:opacity-50" :disabled="uploading" @click="pickCategoryImage(newCategory)">{{ uploading ? 'Загружаем…' : 'Загрузить обложку' }}</button>
           </div>
           <input v-model="newCategory.description" placeholder="Короткое описание" class="w-full h-11 px-3 rounded-xl border border-stone-300 outline-none focus:border-stone-500" />
           <button type="submit" class="w-full h-11 rounded-full bg-stone-900 text-white font-medium hover:bg-stone-700 disabled:opacity-50" :disabled="busy">Добавить</button>
@@ -153,6 +155,7 @@
 
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
+import { obtainStorageFilePutUrl } from '@app/storage'
 import AdminHeader from '../components/AdminHeader.vue'
 import Icon from '../../shop/components/Icon.vue'
 import ProductImage from '../../shop/components/ProductImage.vue'
@@ -174,6 +177,7 @@ const props = defineProps<{
   products: any[]
   orders: any[]
   initialTab: string
+  uploadUrl: string
 }>()
 
 type Tab = 'products' | 'orders' | 'categories'
@@ -200,7 +204,7 @@ const filteredProducts = computed(() => {
 const orderStatus = ref('')
 const filteredOrders = computed(() => orders.value.filter(o => !orderStatus.value || o.status === orderStatus.value))
 
-const newCategory = reactive({ name: '', emoji: '', description: '' })
+const newCategory = reactive({ name: '', imageHash: '', description: '' })
 const editingCategory = ref<any | null>(null)
 
 function productCountIn(categoryId: string) {
@@ -231,7 +235,6 @@ function toggleStatus(p: any) {
       price: p.price,
       oldPrice: p.oldPrice ?? undefined,
       categoryId: p.categoryId ?? undefined,
-      emoji: p.emoji,
       imageHash: p.imageHash ?? undefined,
       status: p.status === 'active' ? 'draft' : 'active',
       stock: p.stock,
@@ -263,7 +266,7 @@ function createCategory() {
     const created = await categoryCreateRoute.run(ctx, { ...newCategory })
     categories.value = [...categories.value, created]
     newCategory.name = ''
-    newCategory.emoji = ''
+    newCategory.imageHash = ''
     newCategory.description = ''
   })
 }
@@ -272,7 +275,7 @@ function saveCategory() {
   const c = editingCategory.value
   if (!c) return
   return run(async () => {
-    const updated = await categoryUpdateRoute.query({ id: c.id }).run(ctx, { name: c.name, emoji: c.emoji, description: c.description })
+    const updated = await categoryUpdateRoute.query({ id: c.id }).run(ctx, { name: c.name, imageHash: c.imageHash || undefined, description: c.description })
     categories.value = categories.value.map(x => (x.id === updated.id ? updated : x))
     editingCategory.value = null
   })
@@ -284,6 +287,36 @@ function deleteCategory(c: any) {
     await categoryDeleteRoute.query({ id: c.id }).run(ctx)
     categories.value = categories.value.filter(x => x.id !== c.id)
   })
+}
+
+const uploading = ref(false)
+
+/** Открывает выбор файла и загружает обложку категории в хранилище. */
+function pickCategoryImage(target: { imageHash?: string | null }) {
+  const input = document.createElement('input')
+  input.type = 'file'
+  input.accept = 'image/*'
+  input.onchange = async () => {
+    const file = input.files?.[0]
+    if (!file) return
+    uploading.value = true
+    error.value = ''
+    try {
+      const putUrl = await obtainStorageFilePutUrl(ctx, { getPutUrl: props.uploadUrl })
+      const body = new FormData()
+      body.append('Filedata', file)
+      const response = await fetch(putUrl, { method: 'POST', body })
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      const hash = (await response.text()).trim()
+      if (!hash) throw new Error('Пустой ответ хранилища')
+      target.imageHash = hash
+    } catch (e: any) {
+      error.value = 'Не удалось загрузить обложку: ' + (e?.message || 'ошибка')
+    } finally {
+      uploading.value = false
+    }
+  }
+  input.click()
 }
 
 function seed() {

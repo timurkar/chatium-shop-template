@@ -19,7 +19,6 @@ export const productUpdateRoute = app.post('/')
       price: new Money(b.price, SHOP.currency),
       oldPrice: b.oldPrice && b.oldPrice > b.price ? new Money(b.oldPrice, SHOP.currency) : null,
       category: b.categoryId || null,
-      emoji: b.emoji?.trim() || '🛍️',
       imageHash: b.imageHash?.trim() || null,
       status: b.status,
       stock: b.stock,

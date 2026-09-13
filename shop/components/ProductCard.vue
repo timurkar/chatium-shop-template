@@ -3,11 +3,8 @@
     <a :href="productRoute.query({ id: product.id }).url()" class="block relative">
       <ProductImage
         :image-hash="product.imageHash"
-        :emoji="product.emoji"
         :title="product.title"
-        :seed="product.id"
-        wrapper-class="aspect-square"
-        emoji-class="text-7xl group-hover:scale-110 transition-transform duration-300"
+        wrapper-class="aspect-square [&_img]:transition-transform [&_img]:duration-500 group-hover:[&_img]:scale-105"
       />
       <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
         <span v-if="product.discountPercent" class="px-2 py-0.5 rounded-full bg-rose-500 text-white text-xs font-bold">−{{ product.discountPercent }}%</span>
@@ -54,7 +51,6 @@ type Product = {
   oldPriceFormatted: string | null
   discountPercent: number | null
   categoryName: string | null
-  emoji: string
   imageHash: string | null
   stock: number
   badge: string | null
