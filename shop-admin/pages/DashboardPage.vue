@@ -13,6 +13,21 @@
         </a>
       </div>
 
+
+      <!-- Демо-данные -->
+      <section v-if="!products.length && !categories.length" class="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+        <div class="flex-1">
+          <div class="font-bold">Таблицы пустые — начните с демо-данных</div>
+          <p class="mt-1 text-sm text-stone-600">Загрузим 5 категорий и 20 товаров с фотографиями — витрина сразу будет выглядеть как настоящий магазин. Потом всё можно отредактировать или удалить.</p>
+        </div>
+        <button type="button" class="h-11 px-5 rounded-full bg-stone-900 text-white font-medium hover:bg-stone-700 disabled:opacity-50 shrink-0" :disabled="busy" @click="seed(false)">{{ busy ? 'Наполняем…' : 'Наполнить демо-данными' }}</button>
+      </section>
+      <p v-else class="mt-4 text-xs text-stone-400">
+        Нужен чистый старт?
+        <button type="button" class="underline hover:text-stone-700" :disabled="busy" @click="seed(true)">сбросить и наполнить демо-данными заново</button>
+        (удалит все товары и категории, заказы не тронет).
+      </p>
+
       <div class="mt-6 inline-flex p-1 rounded-full bg-stone-200/70 text-sm font-medium">
         <button v-for="t in tabs" :key="t.key" type="button" class="h-9 px-4 rounded-full transition" :class="tab === t.key ? 'bg-white shadow-sm' : 'text-stone-500 hover:text-stone-900'" @click="tab = t.key">
           {{ t.label }} <span class="ml-1 text-xs text-stone-400">{{ t.count }}</span>
@@ -32,7 +47,7 @@
         </div>
         <EmptyState v-if="!products.length" icon="box" title="Товаров пока нет" text="Добавьте первый товар или наполните каталог демо-данными.">
           <a :href="adminProductRoute.url()" class="h-11 px-5 rounded-full bg-stone-900 text-white font-medium inline-flex items-center">Добавить товар</a>
-          <button type="button" class="h-11 px-5 rounded-full border border-stone-300 font-medium hover:bg-white" :disabled="busy" @click="seed">Демо-данные</button>
+          <button type="button" class="h-11 px-5 rounded-full border border-stone-300 font-medium hover:bg-white" :disabled="busy" @click="seed(false)">Демо-данные</button>
         </EmptyState>
         <div v-else class="bg-white rounded-2xl border border-stone-200/80 overflow-x-auto">
           <table class="w-full text-sm min-w-[720px]">
@@ -319,9 +334,14 @@ function pickCategoryImage(target: { imageHash?: string | null }) {
   input.click()
 }
 
-function seed() {
+function seed(reset: boolean) {
+  if (reset && !window.confirm('Удалить все товары и категории и наполнить магазин демо-данными заново?')) return
   return run(async () => {
-    await seedRoute.run(ctx)
+    const result = await seedRoute.query(reset ? { reset: '1' } : {}).run(ctx)
+    if (!result.seeded) {
+      error.value = 'reason' in result ? String(result.reason) : 'Данные уже есть'
+      return
+    }
     window.location.reload()
   })
 }
