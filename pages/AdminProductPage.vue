@@ -100,9 +100,9 @@ import Footer from '../components/Footer.vue'
 import Icon from '../components/Icon.vue'
 import ProductImage from '../components/ProductImage.vue'
 import { adminRoute } from '../admin'
-import { productCreateRoute } from '../api/products/create'
-import { productUpdateRoute } from '../api/products/update'
-import { productDeleteRoute } from '../api/products/delete'
+import { productCreateRoute } from '../backend/products/create'
+import { productUpdateRoute } from '../backend/products/update'
+import { productDeleteRoute } from '../backend/products/delete'
 
 const props = defineProps<{ product: any | null; categories: any[]; uploadUrl: string }>()
 

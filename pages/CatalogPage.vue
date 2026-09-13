@@ -80,7 +80,7 @@ import { SORT_OPTIONS } from '../shared/config'
 import { pluralize } from '../shared/cart'
 import { indexRoute } from '../index'
 import { catalogRoute } from '../catalog'
-import { productsListRoute } from '../api/products/list'
+import { productsListRoute } from '../backend/products/list'
 
 const props = defineProps<{
   categories: any[]

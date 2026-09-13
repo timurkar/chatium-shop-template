@@ -113,8 +113,8 @@ import { CART_EVENT, clearCart, formatPrice, pluralize, readCart, removeFromCart
 import { catalogRoute } from '../catalog'
 import { productRoute } from '../product'
 import { orderRoute } from '../order'
-import { productsByIdsRoute } from '../api/products/by-ids'
-import { orderCreateRoute } from '../api/orders/create'
+import { productsByIdsRoute } from '../backend/products/by-ids'
+import { orderCreateRoute } from '../backend/orders/create'
 
 defineProps<{ categories: any[] }>()
 

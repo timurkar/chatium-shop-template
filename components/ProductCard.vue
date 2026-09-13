@@ -31,7 +31,7 @@
           :disabled="product.stock <= 0"
           @click="add"
         >
-          <Icon name="cart" size="w-4 h-4" /><span class="hidden sm:inline">В корзину</span>
+          <Icon name="cart" size="w-4 h-4" /><span class="hidden lg:inline whitespace-nowrap">В корзину</span>
         </button>
         <QtyStepper v-else :model-value="qty" :min="0" :max="product.stock" @update:model-value="setQty" />
       </div>

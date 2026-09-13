@@ -164,12 +164,12 @@ import { adminProductRoute } from '../admin-product'
 import { productRoute } from '../product'
 import { orderRoute } from '../order'
 import { seedRoute } from '../seed'
-import { productUpdateRoute } from '../api/products/update'
-import { productDeleteRoute } from '../api/products/delete'
-import { orderUpdateStatusRoute } from '../api/orders/update-status'
-import { categoryCreateRoute } from '../api/categories/create'
-import { categoryUpdateRoute } from '../api/categories/update'
-import { categoryDeleteRoute } from '../api/categories/delete'
+import { productUpdateRoute } from '../backend/products/update'
+import { productDeleteRoute } from '../backend/products/delete'
+import { orderUpdateStatusRoute } from '../backend/orders/update-status'
+import { categoryCreateRoute } from '../backend/categories/create'
+import { categoryUpdateRoute } from '../backend/categories/update'
+import { categoryDeleteRoute } from '../backend/categories/delete'
 
 const props = defineProps<{
   categories: any[]
