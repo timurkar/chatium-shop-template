@@ -70,7 +70,8 @@ shop-admin/
 
 ## Публикация
 
-Репозиторий синхронизирован с аккаунтом Chatium через Source Git: `git push origin main`
+Публичная копия: GitHub `timurkar/chatium-*-template`. Рабочий репозиторий синхронизирован с аккаунтом Chatium
+через Source Git: `git push origin main`
 публикует изменения в production, push в другую ветку — версию для предпросмотра
 (`?__chtmPreviewMode__=account:<branch>`). Проверка типов: `npm run typecheck`.
 
